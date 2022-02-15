@@ -5,38 +5,54 @@
  */
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *current, *tmp, *aux;
+	listint_t *current = *list, *tmp;
 
 	if (!(*list))
 		return;
-	current = *list;
-	while(current->next)
+	tmp = current->next;
+	while (tmp)
 	{
-		if (current->n > current->next->n)
+		if (current->n > tmp->n)
 		{
-			if (current->prev)
+			swapnode(list, current, tmp);
+			print_list(*list);
+			while (tmp->prev && tmp->n < tmp->prev->n)
 			{
-				while (tmp->prev && tmp->n < tmp->prev->n)
-				{
-					aux = tmp->prev;
-					if (!(tmp->prev->prev))
-						*list = tmp;
-					else
-						aux->prev->next = tmp;
-					aux->next = tmp->next;
-					tmp->prev = aux->prev;
-					aux->prev = tmp;
-					tmp->next = aux;
-					print_list(*list);
-					if (!(tmp->prev))
-						printf("final\n");
-				}
-				printf("sali del while\n");
+				swapnode(list, tmp->prev, tmp);
+				print_list(*list);
 			}
 		}
 		else
-			current = current->next;
+			current = tmp;
 		tmp = current->next;
 	}
 }
+/**
+ * swapnode - swaps adjacent nodes a, b (b = a->next)
+ * @list: pointer to address of head
+ * @a: first node
+ * @b: second node
+ * Return: list after swap
+ */
+void swapnode(listint_t **list, listint_t *a, listint_t *b)
+{
+	/* if "a" is first node*/
+	if (!(a->prev))
+	{
+		*list = b;
+		b->prev = NULL;
+	}
+	else
+	{
+		a->prev->next = b;
+		b->prev = a->prev;
+	}
 
+	a->next = b->next;
+	/* if "b" isnt last node*/
+	if (b->next)
+		b->next->prev = a;
+	b->next = a;
+
+	a->prev = b;
+}
