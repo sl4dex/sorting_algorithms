@@ -10,24 +10,13 @@ void insertion_sort_list(listint_t **list)
 	if (!(*list))
 		return;
 	current = *list;
-	tmp = current->next;
-	while(tmp)
+	while(current->next)
 	{
-		if (current->n > tmp->n)
+		if (current->n > current->next->n)
 		{
-			/* depends if current is in the beginning of list or not */
-			if (!(current->prev))
-				*list = tmp;
-			else
-				current->prev->next = tmp;
-			current->next = tmp->next;
-			tmp->prev = current->prev;
-			current->prev = tmp;
-			tmp->next = current;
-			print_list(*list);
-			if (tmp->prev)
+			if (current->prev)
 			{
-				while (tmp->n < tmp->prev->n)
+				while (tmp->prev && tmp->n < tmp->prev->n)
 				{
 					aux = tmp->prev;
 					if (!(tmp->prev->prev))
@@ -41,8 +30,8 @@ void insertion_sort_list(listint_t **list)
 					print_list(*list);
 					if (!(tmp->prev))
 						printf("final\n");
-					printf("fin\n");
 				}
+				printf("sali del while\n");
 			}
 		}
 		else
