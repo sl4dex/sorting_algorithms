@@ -5,12 +5,13 @@
  */
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *current = *list, *tmp;
-	
+	listint_t *current, *tmp;
+
 	if (!list)
 		return;
 	if (!(*list))
 		return;
+	current = *list;
 	tmp = current->next;
 	while (tmp)
 	{
