@@ -6,8 +6,10 @@
 void insertion_sort_list(listint_t **list)
 {
 	listint_t *current = *list, *tmp;
-
-	if (!(*list) || !list)
+	
+	if (!list)
+		return;
+	if (!(*list))
 		return;
 	tmp = current->next;
 	while (tmp)
